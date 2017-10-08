@@ -1,7 +1,0 @@
-*.pyc
-.tox
-dist/
-.coverage
-htmlcov/
-build/
-qrcode.egg-info/

@@ -1,14 +1,7 @@
 from qrcode import constants, exceptions, util
-from qrcode.image.base import BaseImage
 
 import six
 from bisect import bisect_left
-
-
-def make(data=None, **kwargs):
-    qr = QRCode(**kwargs)
-    qr.add_data(data)
-    return qr.make_image()
 
 
 def _check_version(version):
@@ -252,33 +245,6 @@ class QRCode:
             out.write('\n')
         out.flush()
 
-    def make_image(self, image_factory=None, **kwargs):
-        """
-        Make an image from the QR Code data.
-
-        If the data has not been compiled yet, make it first.
-        """
-        _check_box_size(self.box_size)
-        if self.data_cache is None:
-            self.make()
-
-        if image_factory is not None:
-            assert issubclass(image_factory, BaseImage)
-        else:
-            image_factory = self.image_factory
-            if image_factory is None:
-                # Use PIL by default
-                from qrcode.image.pil import PilImage
-                image_factory = PilImage
-
-        im = image_factory(
-            self.border, self.modules_count, self.box_size, **kwargs)
-        for r in range(self.modules_count):
-            for c in range(self.modules_count):
-                if self.modules[r][c]:
-                    im.drawrect(r, c)
-        return im
-
     def setup_timing_pattern(self):
         for r in range(8, self.modules_count - 8):
             if self.modules[r][6] is not None:
@@ -399,24 +365,3 @@ class QRCode:
                     row -= inc
                     inc = -inc
                     break
-
-    def get_matrix(self):
-        """
-        Return the QR Code as a multidimensonal array, including the border.
-
-        To return the array without a border, set ``self.border`` to 0 first.
-        """
-        if self.data_cache is None:
-            self.make()
-
-        if not self.border:
-            return self.modules
-
-        width = len(self.modules) + self.border*2
-        code = [[False]*width] * self.border
-        x_border = [False]*self.border
-        for module in self.modules:
-            code.append(x_border + module + x_border)
-        code += [[False]*width] * self.border
-
-        return code
