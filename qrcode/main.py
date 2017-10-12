@@ -1,6 +1,5 @@
 from qrcode import constants, exceptions, util
 
-import six
 from bisect import bisect_left
 
 
@@ -217,8 +216,7 @@ class QRCode:
             self.make()
 
         modcount = self.modules_count
-        codes = [six.int2byte(code).decode('cp437')
-                 for code in (255, 223, 220, 219)]
+        codes = list(b'\xff\xdf\xdc\xdb'.decode('cp437'))
         if tty:
             invert = True
         if invert:
@@ -331,7 +329,7 @@ class QRCode:
 
         data_len = len(data)
 
-        for col in six.moves.xrange(self.modules_count - 1, 0, -2):
+        for col in range(self.modules_count - 1, 0, -2):
 
             if col <= 6:
                 col -= 1

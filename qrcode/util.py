@@ -1,9 +1,6 @@
 import re
 import math
 
-import six
-from six.moves import xrange
-
 from qrcode import base, exceptions
 
 # QR encoding modes.
@@ -32,8 +29,8 @@ MODE_SIZE_LARGE = {
     MODE_KANJI: 12,
 }
 
-ALPHA_NUM = six.b('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./:')
-RE_ALPHA_NUM = re.compile(six.b('^[') + re.escape(ALPHA_NUM) + six.b(']*\Z'))
+ALPHA_NUM = b'0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./:'
+RE_ALPHA_NUM = re.compile(b'^[' + re.escape(ALPHA_NUM) + b']*\Z')
 
 # The number of bits for numeric delimited data lengths.
 NUMBER_LENGTH = {3: 10, 2: 7, 1: 4}
@@ -96,8 +93,8 @@ PAD1 = 0x11
 _data_count = lambda block: block.data_count
 BIT_LIMIT_TABLE = [
     [0] + [8*sum(map(_data_count, base.rs_blocks(version, error_correction)))
-           for version in xrange(1, 41)]
-    for error_correction in xrange(4)
+           for version in range(1, 41)]
+    for error_correction in range(4)
 ]
 
 
@@ -188,7 +185,7 @@ def lost_point(modules):
 def _lost_point_level1(modules, modules_count):
     lost_point = 0
 
-    modules_range = xrange(modules_count)
+    modules_range = range(modules_count)
     row_range_first = (0, 1)
     row_range_last = (-1, 0)
     row_range_standard = (-1, 0, 1)
@@ -241,7 +238,7 @@ def _lost_point_level1(modules, modules_count):
 def _lost_point_level2(modules, modules_count):
     lost_point = 0
 
-    modules_range = xrange(modules_count - 1)
+    modules_range = range(modules_count - 1)
 
     for row in modules_range:
         this_row = modules[row]
@@ -263,10 +260,10 @@ def _lost_point_level2(modules, modules_count):
 
 
 def _lost_point_level3(modules, modules_count):
-    modules_range_short = xrange(modules_count-6)
+    modules_range_short = range(modules_count-6)
 
     lost_point = 0
-    for row in xrange(modules_count):
+    for row in range(modules_count):
         this_row = modules[row]
         for col in modules_range_short:
             if (this_row[col]
@@ -278,7 +275,7 @@ def _lost_point_level3(modules, modules_count):
                     and this_row[col + 6]):
                 lost_point += 40
 
-    for col in xrange(modules_count):
+    for col in range(modules_count):
         for row in modules_range_short:
             if (modules[row][col]
                     and not modules[row + 1][col]
@@ -293,7 +290,7 @@ def _lost_point_level3(modules, modules_count):
 
 
 def _lost_point_level4(modules, modules_count):
-    modules_range = xrange(modules_count)
+    modules_range = range(modules_count)
     dark_count = 0
 
     for row in modules_range:
@@ -313,12 +310,11 @@ def optimal_data_chunks(data, minimum=4):
     :param minimum: The minimum number of bytes in a row to split as a chunk.
     """
     data = to_bytestring(data)
-    re_repeat = (
-        six.b('{') + six.text_type(minimum).encode('ascii') + six.b(',}'))
-    num_pattern = re.compile(six.b('\d') + re_repeat)
+    re_repeat = b'{' + u'{}'.format(minimum).encode('ascii') + b',}'
+    num_pattern = re.compile(b'\d' + re_repeat)
     num_bits = _optimal_split(data, num_pattern)
     alpha_pattern = re.compile(
-        six.b('[') + re.escape(ALPHA_NUM) + six.b(']') + re_repeat)
+        b'[' + re.escape(ALPHA_NUM) + b']' + re_repeat)
     for is_num, chunk in num_bits:
         if is_num:
             yield QRData(chunk, mode=MODE_NUMBER, check_data=False)
@@ -350,8 +346,8 @@ def to_bytestring(data):
     Convert data to a (utf-8 encoded) byte-string if it isn't a byte-string
     already.
     """
-    if not isinstance(data, six.binary_type):
-        data = six.text_type(data).encode('utf-8')
+    if not isinstance(data, bytes):
+        data = u'{}'.format(data).encode('utf-8')
     return data
 
 
@@ -399,12 +395,12 @@ class QRData:
 
     def write(self, buffer):
         if self.mode == MODE_NUMBER:
-            for i in xrange(0, len(self.data), 3):
+            for i in range(0, len(self.data), 3):
                 chars = self.data[i:i + 3]
                 bit_length = NUMBER_LENGTH[len(chars)]
                 buffer.put(int(chars), bit_length)
         elif self.mode == MODE_ALPHA_NUM:
-            for i in xrange(0, len(self.data), 2):
+            for i in range(0, len(self.data), 2):
                 chars = self.data[i:i + 2]
                 if len(chars) > 1:
                     buffer.put(
@@ -413,13 +409,7 @@ class QRData:
                 else:
                     buffer.put(ALPHA_NUM.find(chars), 6)
         else:
-            if six.PY3:
-                # Iterating a bytestring in Python 3 returns an integer,
-                # no need to ord().
-                data = self.data
-            else:
-                data = [ord(c) for c in self.data]
-            for c in data:
+            for c in memoryview(self.data).tolist():
                 buffer.put(c, 8)
 
     def __repr__(self):
