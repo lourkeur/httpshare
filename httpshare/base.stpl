@@ -1,0 +1,9 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html>
+    <head>
+        <title>httpshare &mdash; {{title}}</title>
+    </head>
+    <body>
+        {{!base}}
+    </body>
+</html>

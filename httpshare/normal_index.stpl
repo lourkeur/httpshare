@@ -1,0 +1,5 @@
+%rebase('base', title=path)
+<h1>{{path}}</h1>
+%include('_index', entries=entries)
+<hr/>
+%include('_upload_form', entries=entries)

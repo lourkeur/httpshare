@@ -1,0 +1,14 @@
+%rebase('base', title='Q&D LAN file sharing')
+<h1>Welcome!</h1>
+<p>
+  You've reached an ephemeral file sharing service launched on a computer near you.
+  You can click on directories to browse them, click on files to download them, or use the form at the bottom to upload files.
+</p><p>
+  This program:
+  <a href='/license'>License</a>
+  <a href='https://github.com/lourkeur/httpshare'>Development</a>
+</p>
+<hr/>
+%include('_index', entries=entries)
+<hr/>
+%include('_upload_form', entries=entries)

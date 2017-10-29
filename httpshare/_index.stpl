@@ -1,0 +1,5 @@
+<ul>
+  %for ent in entries:
+    <li><a href='{{ent}}'>{{ent}}</a></li>
+  %end
+</ul>
