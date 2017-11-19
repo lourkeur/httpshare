@@ -60,6 +60,7 @@ if sys.stdout.isatty():
     except UnicodeError:
         q.print_tty()
 print(url)
+sys.stdout.flush()  # otherwise python2 unit tests cant read url
 
 try:
     httpd.serve_forever()
