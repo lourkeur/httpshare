@@ -1,0 +1,8 @@
+script:
+  - ./make_zipapp.sh
+  - gpg --store --armor --compress-algo bzip2 --output - httpshare.pyz
+addons:
+  apt:
+    packages:
+      # bats  # already installed
+      faketime
