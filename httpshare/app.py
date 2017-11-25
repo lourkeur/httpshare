@@ -92,14 +92,3 @@ def license():
     txt = loader.get_data(path.join(basepath, 'LICENSE.txt')).decode('ascii')
     response.body = template('license_page', txt=txt)
     return response
-
-@route('/copy')
-def copy():
-    loader = pkgutil.get_loader('httpshare')
-    if not hasattr(loader, 'archive'):
-        abort(404, 'Unable to locate the program.')
-    resource = os.path.abspath(loader.archive)
-    return static_file(
-            resource, '/',
-            download='httpshare.pyz',
-            )
