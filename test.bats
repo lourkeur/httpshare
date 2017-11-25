@@ -99,22 +99,6 @@ if [ -z "$PYTHON" ]; then
   PYTHON=python
 fi
 
-case "$MODE" in
-( debug | release )
-# OK
-;;
-( "" )
-MODE=debug
-;;
-( * )
-echo "unknown mode: $MODE"
-echo "valid modes are:"
-echo " - debug (default)"
-echo " - release"
-exit 2
-;;
-esac
-
 wait_till () {
 local tries=0
 until "$@"; do
@@ -127,13 +111,6 @@ done
 
 setup () {
 tempdir=$(mktemp -d -p "$BATS_TMPDIR" httpshare.XXXXXX)
-if [ "$MODE" = release ]; then
-  ./make_zipapp.sh
-  cp httpshare.pyz "$tempdir/server.pyz"
-  script=server.pyz
-else
-  script="$PWD"
-fi
 cd "$tempdir"
 mkdir share
 echo "content of a" >share/a
@@ -142,7 +119,7 @@ echo "content of b/c" >share/b/c
 server_dir="$tempdir/share"
 server_log="$tempdir/server.log"
 exec {into_server_log}>"$server_log"
-coproc server ("$PYTHON" "$script" --address=127.0.0.1 --directory "$server_dir" >&$into_server_log 2>&1)
+coproc server ("$PYTHON" -m httpshare --address=127.0.0.1 --directory "$server_dir" >&$into_server_log 2>&1)
   found_url () {
     server_url=$(grep '^http://' "$server_log")
     [ -n "$server_url" ]
@@ -212,9 +189,4 @@ diff -u <(expected_homepage) <(curl -s -L "$server_url/share/a/../../../..")
 
 @test "license page" {
 diff -u <(expected_license_page) <(curl -s -L "$server_url/license")
-}
-
-@test "copy" {
-[ "$MODE" = debug ] && skip
-cmp -s <(curl -s -L "$server_url/copy") "$tempdir/server.pyz"
 }
