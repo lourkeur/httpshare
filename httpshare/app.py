@@ -10,10 +10,7 @@ from bottle import abort, redirect, request, response, route, static_file
 
 
 if sys.version_info < (3,):
-    def input(prompt):
-        sys.stdout.write(prompt)
-        sys.stdout.flush()
-        return sys.stdin.readline().rstrip()
+    input = raw_input
 
 def confirm(prompt):
     answer = input(prompt + '? [y/n] ')
@@ -87,9 +84,7 @@ def home():
 
 @route('/license')
 def license():
-    loader = pkgutil.get_loader('httpshare')
-    basepath = dirname(dirname(loader.get_filename('httpshare')))
-    txt = loader.get_data(path.join(basepath, 'LICENSE.txt')).decode('ascii')
+    txt = pkgutil.get_data('__main__', 'LICENSE.txt').decode('ascii')
     response.body = template('license_page', txt=txt)
     return response
 

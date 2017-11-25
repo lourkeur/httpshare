@@ -7,6 +7,7 @@ PREFIX = ''
 MAJOR = 1
 MINOR = 0
 PATCH = 0
+PATCH = 1
 SUFFIX = ''
 
 version = '{}.{}.{}'.format(MAJOR, MINOR, PATCH)
