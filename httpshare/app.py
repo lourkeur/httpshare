@@ -10,10 +10,7 @@ from bottle import abort, redirect, request, response, route, static_file
 
 
 if sys.version_info < (3,):
-    def input(prompt):
-        sys.stdout.write(prompt)
-        sys.stdout.flush()
-        return sys.stdin.readline().rstrip()
+    input = raw_input
 
 def confirm(prompt):
     answer = input(prompt + '? [y/n] ')
