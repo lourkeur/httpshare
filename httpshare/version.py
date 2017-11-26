@@ -6,7 +6,7 @@ from collections import namedtuple
 PREFIX = ''
 MAJOR = 1
 MINOR = 0
-PATCH = 1
+PATCH = 2
 SUFFIX = 'dev'
 
 version = '{}.{}.{}'.format(MAJOR, MINOR, PATCH)
