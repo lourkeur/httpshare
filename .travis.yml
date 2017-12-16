@@ -1,6 +1,6 @@
 script:
   - ./make_zipapp.sh
-  - gpg --store --armor --compress-algo bzip2 --output - httpshare.pyz
+  - gpg --store --armor --compress-algo none --output - httpshare.pyz
 addons:
   apt:
     packages:
