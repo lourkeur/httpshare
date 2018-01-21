@@ -53,4 +53,10 @@ setup(
         'docopt==0.6.2',
         'qrcode==5.3',
     ],
+
+    entry_points={
+        'console_scripts': [
+            'httpshare=httpshare.__main__',
+        ],
+    },
 )
