@@ -17,6 +17,12 @@ An easy-to-deploy file transfer tool.  The only requirements are:
 
 Usage
 =====
+Make sure you have a Python interpreter set up.
+It doesn't matter if it's 2.7 or 3+.
+Then, simply install httpshare the normal Python way using ``pip install httpshare`` on the command line.
+Then, you can call httpshare by simply typing ``httpshare`` on the command-line.
+Also see ``httpshare --help``.
+
 When launched, unless a network address was specified on the command-line, httpshare learns its address by connecting to a widely available web site. (http://github.com/)
 This is reasonably likely to be the correct setting in common scenarios since most networks nowadays are primarily meant to provide access to the internet.
 Once this is done, it starts listening on an ephemeral port and prints an URL to help the other device (*the guest*) connect.
