@@ -11,7 +11,7 @@ setup(
     description='Q&D file transfer utility using an ephemeral HTTP service',
 
     # The project's main homepage.
-    url='https://github.com/lourkeur/httpshare',
+    url='https://github.com/lourkeur/httpshare/tree/pypi',
 
     # Author details
     author='Louis Bettens',
