@@ -1,4 +1,5 @@
 from setuptools import setup, find_packages
+import io
 
 import httpshare
 
@@ -9,6 +10,7 @@ setup(
     version='%(major)d.%(minor)d.%(patch)d' % httpshare.version_info._asdict(),
 
     description='Q&D file transfer utility using an ephemeral HTTP service',
+    long_description=io.open('README.rst', encoding='utf-8').read(),
 
     # The project's main homepage.
     url='https://github.com/lourkeur/httpshare/tree/pypi',
