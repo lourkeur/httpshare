@@ -46,4 +46,5 @@ setup(
     package_data={
         'httpshare': ['*.stpl', 'LICENSE.txt'],
     },
+    zip_safe=True,  # by design
 )
