@@ -284,7 +284,10 @@ echo "content of b/e" > e
 curl -s -F "payload=@e" "$server_url/share/b/" &
 [ ! -e "$server_dir/b/e" ]
 yes_server "Accept incoming file e in $server_dir/b"
+created () {
 [ -e "$server_dir/b/e" ]
+}
+wait_till created
 [ "$(cat "$server_dir/b/e")" = "content of b/e" ]
 [ "$(curl -s "$server_url/share/b/e")" = "content of b/e" ]
 }
@@ -296,7 +299,10 @@ curl -s -F "payload=@c" "$server_url/share/b/" &
 yes_server "Accept incoming file c in $server_dir/b"
 [ "$(cat "$server_dir/b/c")" = "content of b/c" ]
 yes_server "Really overwrite $server_dir/b/c"
+overwritten () {
 [ "$(cat "$server_dir/b/c")" = "new content of b/c" ]
+}
+wait_till overwritten
 [ "$(curl -s "$server_url/share/b/c")" = "new content of b/c" ]
 }
 
