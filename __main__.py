@@ -33,7 +33,13 @@ import qrcode
 from httpshare import version
 app = bottle.load_app('httpshare.app')
 
+# explanation borrowed from https://docs.python.org/library/exceptions.html#exceptions.KeyboardInterrupt
+THE_INTERRUPT_KEY = 'the interrupt key (normally Control-C or Delete)'
+
 print('httpshare version {}'.format(version))
+print()
+print('You can use {} to exit the program.'.format(THE_INTERRUPT_KEY))
+print()
 
 options = docopt.docopt(__doc__)
 
