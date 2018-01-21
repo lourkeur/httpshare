@@ -84,6 +84,6 @@ def home():
 
 @route('/license')
 def license():
-    txt = pkgutil.get_data('__main__', 'LICENSE.txt').decode('ascii')
+    txt = pkgutil.get_data('httpshare', 'LICENSE.txt').decode('ascii')
     response.body = template('license_page', txt=txt)
     return response
