@@ -119,7 +119,7 @@ echo "content of b/c" >share/b/c
 server_dir="$tempdir/share"
 server_log="$tempdir/server.log"
 exec {into_server_log}>"$server_log"
-coproc server ("$PYTHON" -u -m httpshare --address=127.0.0.1 --directory "$server_dir" >&$into_server_log 2>&1)
+coproc server (PYTHONUNBUFFERED=y httpshare --address=127.0.0.1 --directory "$server_dir" >&$into_server_log 2>&1)
   found_url () {
     server_url=$(grep '^http://' "$server_log")
     [ -n "$server_url" ]
