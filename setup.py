@@ -47,4 +47,10 @@ setup(
         'httpshare': ['*.stpl', 'LICENSE.txt'],
     },
     zip_safe=True,  # by design
+
+    install_requires=[
+        'bottle==0.12.13',
+        'docopt==0.6.2',
+        'qrcode==5.3',
+    ],
 )
