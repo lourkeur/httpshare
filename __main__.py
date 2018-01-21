@@ -47,7 +47,7 @@ addr = options['--address']
 if addr is None:
     # sockets aren't context managers in Python 2.7
     with contextlib.closing(socket.socket()) as s:
-        s.connect(('google.com', 80))
+        s.connect(('github.com', 80))
         addr = s.getsockname()[0]
 
 app.config.update('httpshare',
