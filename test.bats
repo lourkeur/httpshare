@@ -95,10 +95,6 @@ freely, subject to the following restrictions:
 END
 }
 
-if [ -z "$PYTHON" ]; then
-  PYTHON=python
-fi
-
 wait_till () {
 local tries=0
 until "$@"; do
