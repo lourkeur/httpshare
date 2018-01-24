@@ -20,6 +20,8 @@ Options:
 '''
 
 
+from __future__ import print_function
+
 import wsgiref.simple_server
 import os
 import socket
