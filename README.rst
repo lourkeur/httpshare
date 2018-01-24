@@ -63,8 +63,7 @@ It cannot distribute itself.
 
 Building
 ========
-Building the ZIP application is achieved simply by running the ``make_zipapp.sh`` script.
-Please read the comments in it.
+Building the ZIP application is achieved simply by running the ``make_zipapp.py`` script.
 In theory, it should produce a result that's bit-identical to the one I publish.
 This is corroborated by building each release on Travis CI as well as on my machine.
 The goal is to have `build reproductibility`_.

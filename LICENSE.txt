@@ -1,1 +1,1 @@
-httpshare/LICENSE.txt
+src/httpshare/LICENSE.txt

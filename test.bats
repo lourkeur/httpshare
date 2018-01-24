@@ -222,7 +222,7 @@ done
 setup () {
 tempdir=$(mktemp -d -p "$BATS_TMPDIR" httpshare.XXXXXX)
 if [ "$MODE" = release ]; then
-  ./make_zipapp.sh
+  ./make_zipapp.py
   cp httpshare.pyz "$tempdir/server.pyz"
   script=server.pyz
 else
