@@ -56,7 +56,7 @@ setup(
 
     entry_points={
         'console_scripts': [
-            'httpshare=httpshare.__main__',
+            'httpshare=httpshare:main',
         ],
     },
 )
