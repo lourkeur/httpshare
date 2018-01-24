@@ -12,6 +12,6 @@ echo '#!/usr/bin/env python'
 # This is because Python doesn't want file comments in PyZ files.
 env TZ='' \
 faketime "@$time" \
-git archive --format=zip HEAD: '**.py' '**.stpl' LICENSE.txt
+git archive --format=zip HEAD: '**.py' '**.stpl' httpshare/LICENSE.txt
 )
 chmod +x httpshare.pyz
