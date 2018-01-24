@@ -224,9 +224,10 @@ tempdir=$(mktemp -d -p "$BATS_TMPDIR" httpshare.XXXXXX)
 if [ "$MODE" = release ]; then
   ./make_zipapp.py
   cp httpshare.pyz "$tempdir/server.pyz"
-  script=server.pyz
+  program_options=(server.pyz)
 else
-  script="$PWD"
+  export PYTHONPATH="$PWD/src"
+  program_options=(-c 'import httpshare; httpshare.main()')
 fi
 cd "$tempdir"
 mkdir share
@@ -236,7 +237,7 @@ echo "content of b/c" >share/b/c
 server_dir="$tempdir/share"
 server_log="$tempdir/server.log"
 exec {into_server_log}>"$server_log"
-coproc server ("$PYTHON" -u "$script" --address=127.0.0.1 --directory "$server_dir" >&$into_server_log 2>&1)
+coproc server ("$PYTHON" -u "${program_options[@]}" --address=127.0.0.1 --directory "$server_dir" >&$into_server_log 2>&1)
   found_url () {
     server_url=$(grep '^http://' "$server_log")
     [ -n "$server_url" ]

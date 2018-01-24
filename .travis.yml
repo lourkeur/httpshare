@@ -6,9 +6,4 @@ python:
   - '3.6'
   - '3.7-dev'
 script:
-  - env MODE=release ./test.bats
-addons:
-  apt:
-    packages:
-      # bats  # already installed
-      faketime
+  - env MODE=debug ./test.bats
