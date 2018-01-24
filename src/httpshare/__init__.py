@@ -2,3 +2,4 @@
 
 
 from .version import version, version_info
+from .main import main

@@ -1,8 +1,3 @@
 script:
-  - ./make_zipapp.sh
+  - ./make_zipapp.py
   - base64 httpshare.pyz
-addons:
-  apt:
-    packages:
-      # bats  # already installed
-      faketime
