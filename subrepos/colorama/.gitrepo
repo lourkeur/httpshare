@@ -1,0 +1,11 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/tartley/colorama
+	branch = 0.3.9
+	commit = d83cff271f67e756e65be9427056442858d2ec24
+	parent = d2ab7929bc1164cdd998b14fb0749a78a98e8676
+	cmdver = 0.3.1
