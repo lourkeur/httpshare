@@ -8,7 +8,7 @@ version_info = namedtuple('version', 'prefix major minor patch suffix')(
     major=1,
     minor=0,
     patch=4,
-    suffix='dev',
+    suffix='dev+colorama',
 )
 
 version = '%(major)d.%(minor)d.%(patch)d' % version_info._asdict()
