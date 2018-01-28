@@ -40,6 +40,11 @@ def main():
     # imported here to avoid cycles
     import httpshare
 
+    # get the QR code to display properly on MS platforms
+    if sys.platform.startswith(('win', 'cygwin')):
+        import colorama
+        colorama.init()
+
     print('httpshare version {}'.format(httpshare.version))
     print()
     print('You can use {} to exit the program.'.format(THE_INTERRUPT_KEY))
