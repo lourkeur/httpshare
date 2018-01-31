@@ -70,7 +70,7 @@ cat <<END
         <pre>
 zlib License
 
-Copyright 2017 Louis Bettens
+Copyright 2018 Louis Bettens
 
 This software is provided &#039;as-is&#039;, without any express or implied warranty.
 In no event will the authors be held liable for any damages arising from the

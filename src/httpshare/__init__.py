@@ -1,4 +1,4 @@
-# Copyright 2017 Louis Bettens
+# Copyright 2018 Louis Bettens
 
 
 from .version import version, version_info
