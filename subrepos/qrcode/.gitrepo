@@ -1,0 +1,11 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/lincolnloop/python-qrcode
+	branch = v5.3
+	commit = e26e0c2cb2058e97f1935f8aee9121420b247af4
+	parent = af54a5065e2bfcbab4a018bb9e18ea67c1ba4281
+	cmdver = 0.3.1
