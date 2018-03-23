@@ -6,6 +6,6 @@
 [subrepo]
 	remote = https://github.com/bottlepy/bottle
 	branch = release-0.12
-	commit = b891f491d27c73d38807b5868af7808cf4302484
-	parent = 9a957e1497d21d809bd4dc1870296817715b6934
+	commit = ab4d0c66d7e57624f595aecb53bf3464a3aabf6a
+	parent = none
 	cmdver = 0.3.1

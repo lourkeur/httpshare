@@ -9,11 +9,22 @@ An easy-to-deploy file transfer tool.  The only requirements are:
 
 * The other has a web browser.
 
-.. image:: static/demo1.png
-   :alt: httpshare displaying a QR code as it starts
+.. figure:: static/demo1.png
+   :target: demo1_transcript_
+   :alt:
+     Screenshot of httpshare in a vanilla Ubuntu terminal.
+     (follow link for transcript)
 
-.. image:: static/demo2.png
-   :alt: the resulting service in Firefox Mobile
+   httpshare displaying a QR code as it starts.
+
+
+.. figure:: static/demo2.png
+   :target: demo2_transcript_
+   :alt:
+     Screenshot of the homepage of httpshare's ephemeral site.
+     (follow link for transcript)
+
+   The resulting service in Firefox Mobile.
 
 Usage
 =====
@@ -78,3 +89,31 @@ Trivia
 ======
 The Python standard library module ``http.server`` (or ``SimpleHTTPServer`` in Python 2) offers similar functionality, but doesn't support uploading.
 This project started with the goal of enhancing it, although it doesn't rely on code that's part of it.
+
+.. [#demo1_transcript]
+   ::
+
+    user@artfulhost:~$ httpshare --directory Pictures/
+    httpshare version 1.0.3
+
+    You can use the interrupt key (normally Control-C or Delete) to exit the program.
+
+    [[QR code]]
+    http://10.0.0.72:34575
+
+.. [#demo2_transcript]
+   ::
+
+    Welcome!
+
+    You've reached an ephemeral file sharing service launched on a computer near you. You can click on directories to browse them, click on files to download them, or use the form at the bottom to upload files.
+
+    This program: License(link) Copy(link) Development(link)
+
+    ---
+
+    (item) demo1.png(link)
+
+    ---
+
+    [[Browse] No file selected] [OK]

@@ -1,4 +1,4 @@
-# Copyright 2017 Louis Bettens
+# Copyright 2018 Louis Bettens
 
 
 '''
@@ -23,10 +23,9 @@ Options:
 from __future__ import print_function
 
 import wsgiref.simple_server
-import os
 import socket
 import sys
-import contextlib
+import traceback
 
 import bottle
 import docopt
@@ -50,10 +49,17 @@ def main():
 
     addr = options['--address']
     if addr is None:
-        # sockets aren't context managers in Python 2.7
-        with contextlib.closing(socket.socket()) as s:
+        s = socket.socket()
+        try:
             s.connect(LANDMARK)
             addr = s.getsockname()[0]
+        except socket.error:
+            print("Guessing my network address failed.")
+            print("You can provide a network address to serve on using --address")
+            traceback.print_exc(file=sys.stdout)
+            sys.exit(1)
+        finally:
+            s.close()
 
     app = bottle.load_app('httpshare.app')
     app.config.update('httpshare',
