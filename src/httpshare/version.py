@@ -7,7 +7,7 @@ version_info = namedtuple('version', 'prefix major minor patch suffix')(
     prefix='',
     major=1,
     minor=0,
-    patch=4,
+    patch=5,
     suffix='',
 )
 

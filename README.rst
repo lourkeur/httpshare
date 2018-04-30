@@ -70,7 +70,7 @@ A `PyPI variant`_ of this software is also available.
 It cannot distribute itself.
 
 .. _the signing key: release_key.asc
-.. _PyPI variant: https://pypi.python.org/pypi/httpshare
+.. _PyPI variant: https://pypi.org/pypi/httpshare
 
 Building
 ========
