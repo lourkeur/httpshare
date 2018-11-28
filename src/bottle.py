@@ -16,7 +16,7 @@ License: MIT
 from __future__ import with_statement
 
 __author__ = 'Marcel Hellkamp'
-__version__ = '0.12.13'
+__version__ = '0.12.14'
 __license__ = 'MIT'
 
 import base64, cgi, email.utils, functools, hmac, imp, itertools, mimetypes,\
