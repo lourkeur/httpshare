@@ -1,0 +1,11 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/bottlepy/bottle
+	branch = 0.12.13
+	commit = 7423aa0f64e381507d1e06a6bcab48888baf9a7b
+	parent = 49098029af4abe8995b265de7e6758c6cf0f7f10
+	cmdver = 0.3.1
