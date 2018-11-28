@@ -5,7 +5,7 @@
 ;
 [subrepo]
 	remote = https://github.com/bottlepy/bottle
-	branch = 0.12.13
-	commit = 7423aa0f64e381507d1e06a6bcab48888baf9a7b
-	parent = 49098029af4abe8995b265de7e6758c6cf0f7f10
+	branch = 0.12.14
+	commit = 7533c5deea54be65361d61a801a2fc14a32b887c
+	parent = b563db5c4a314f154897b127a52d5dcb75816a91
 	cmdver = 0.3.1
