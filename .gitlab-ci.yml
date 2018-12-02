@@ -1,0 +1,8 @@
+image: python:latest
+
+zipapp:
+  script:
+    - ./make_zipapp.py
+  artifacts:
+    paths:
+      - httpshare.pyz
