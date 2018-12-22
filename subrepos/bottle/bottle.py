@@ -16,7 +16,7 @@ License: MIT (see LICENSE for details)
 from __future__ import with_statement
 
 __author__ = 'Marcel Hellkamp'
-__version__ = '0.12.15'
+__version__ = '0.12.16'
 __license__ = 'MIT'
 
 # The gevent server adapter needs to patch some modules before they are imported
@@ -3156,7 +3156,7 @@ class FileCheckerThread(threading.Thread):
         files = dict()
 
         for module in list(sys.modules.values()):
-            path = getattr(module, '__file__', '')
+            path = getattr(module, '__file__', '') or ''
             if path[-4:] in ('.pyo', '.pyc'): path = path[:-1]
             if path and exists(path): files[path] = mtime(path)
 
