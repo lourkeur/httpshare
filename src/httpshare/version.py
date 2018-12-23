@@ -1,4 +1,4 @@
-# Copyright 2018 Louis Bettens
+# Copyright 2019 Louis Bettens
 
 
 from collections import namedtuple
@@ -7,7 +7,7 @@ version_info = namedtuple('version', 'prefix major minor patch suffix')(
     prefix='',
     major=1,
     minor=0,
-    patch=5,
+    patch=6,
     suffix='',
 )
 
