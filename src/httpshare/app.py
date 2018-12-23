@@ -3,7 +3,6 @@
 
 import os, pkgutil, sys
 import os.path as path
-from os.path import abspath, dirname
 
 import bottle
 from bottle import abort, redirect, request, response, route, static_file
@@ -34,8 +33,8 @@ def share(resourcepath=''):
     config = request.app.config
     directory = config['httpshare.directory'] or '.'
     # the two next lines are taken from bottle.static_file
-    root = path.join(abspath(directory), '')
-    resource = abspath(path.join(root, resourcepath)) if resourcepath else root
+    root = path.join(path.abspath(directory), '')
+    resource = path.abspath(path.join(root, resourcepath)) if resourcepath else root
 
     if not resource.startswith(root):
         abort(403, "Access denied.")
@@ -93,7 +92,7 @@ def copy():
     loader = pkgutil.get_loader('httpshare')
     if not hasattr(loader, 'archive'):
         abort(404, 'Unable to locate the program.')
-    resource = os.path.abspath(loader.archive)
+    resource = path.abspath(loader.archive)
     return static_file(
             resource, '/',
             download='httpshare.pyz',
