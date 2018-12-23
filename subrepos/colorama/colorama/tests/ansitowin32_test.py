@@ -1,25 +1,11 @@
 # Copyright Jonathan Hartley 2013. BSD 3-Clause license, see LICENSE file.
-try:
-    # python3
-    from io import StringIO
-except ImportError:
-    # python2
-    import StringIO
+from io import StringIO
+from unittest import TestCase, main
 
-try:
-    # with unittest2 installed, presumably is Python <= 2.6
-    from unittest2 import TestCase, main
-except ImportError:
-    # without unittest2 installed, hopefully is Python > 2.6
-    from unittest import TestCase, main
+from mock import MagicMock, Mock, patch
 
-from mock import Mock, patch
-
-from .utils import osname
-
-from ..ansi import Style
 from ..ansitowin32 import AnsiToWin32, StreamWrapper
-
+from .utils import osname
 
 
 class StreamWrapperTest(TestCase):
@@ -35,6 +21,21 @@ class StreamWrapperTest(TestCase):
         wrapper = StreamWrapper(mockStream, mockConverter)
         wrapper.write('hello')
         self.assertTrue(mockConverter.write.call_args, (('hello',), {}))
+
+    def testDelegatesContext(self):
+        mockConverter = Mock()
+        s = StringIO()
+        with StreamWrapper(s, mockConverter) as fp:
+            fp.write(u'hello')
+        self.assertTrue(s.closed)
+
+    def testProxyNoContextManager(self):
+        mockStream = MagicMock()
+        mockStream.__enter__.side_effect = AttributeError()
+        mockConverter = Mock()
+        with self.assertRaises(AttributeError) as excinfo:
+            with StreamWrapper(mockStream, mockConverter) as wrapper:
+                wrapper.write('hello')
 
 
 class AnsiToWin32Test(TestCase):
@@ -205,4 +206,3 @@ class AnsiToWin32Test(TestCase):
 
 if __name__ == '__main__':
     main()
-

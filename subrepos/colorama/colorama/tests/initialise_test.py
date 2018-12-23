@@ -1,17 +1,13 @@
 # Copyright Jonathan Hartley 2013. BSD 3-Clause license, see LICENSE file.
+import os
 import sys
-try:
-    from unittest2 import TestCase, main
-except ImportError:
-    from unittest import TestCase, main
+from unittest import TestCase, main
 
 from mock import patch
 
-from .utils import osname, redirected_output, replace_by_none
-
-from ..initialise import init
 from ..ansitowin32 import StreamWrapper
-import os
+from ..initialise import init
+from .utils import osname, redirected_output, replace_by
 
 orig_stdout = sys.stdout
 orig_stderr = sys.stderr
@@ -59,9 +55,9 @@ class InitTest(TestCase):
             self.assertNotWrapped()
 
     def testInitDoesntWrapIfNone(self):
-        with replace_by_none():
+        with replace_by(None):
             init()
-            # We can't use assertNotWrapped here because replace_by_none
+            # We can't use assertNotWrapped here because replace_by(None)
             # changes stdout/stderr already.
             self.assertIsNone(sys.stdout)
             self.assertIsNone(sys.stderr)
@@ -125,4 +121,3 @@ class InitTest(TestCase):
 
 if __name__ == '__main__':
     main()
-

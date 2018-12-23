@@ -1,5 +1,7 @@
 *.pyc
 *.egg-info
+.coverage
+.tox/
 MANIFEST
 dist
 tags

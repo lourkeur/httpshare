@@ -1,13 +1,17 @@
 .. image:: https://img.shields.io/pypi/v/colorama.svg
-    :target: https://pypi.python.org/pypi/colorama/
+    :target: https://pypi.org/project/colorama/
     :alt: Latest Version
+
+.. image:: https://img.shields.io/pypi/pyversions/colorama.svg
+    :target: https://pypi.org/project/colorama/
+    :alt: Supported Python versions
 
 .. image:: https://travis-ci.org/tartley/colorama.svg?branch=master
     :target: https://travis-ci.org/tartley/colorama
     :alt: Build Status
 
 Download and docs:
-    http://pypi.python.org/pypi/colorama
+    https://pypi.org/project/colorama/
 Source code & Development:
     https://github.com/tartley/colorama
 
@@ -26,8 +30,8 @@ Colorama does nothing.
 
 Colorama also provides some shortcuts to help generate ANSI sequences
 but works fine in conjunction with any other ANSI sequence generation library,
-such as the venerable Termcolor (http://pypi.python.org/pypi/termcolor)
-or the fabulous Blessings (https://pypi.python.org/pypi/blessings).
+such as the venerable Termcolor (https://pypi.org/project/termcolor/)
+or the fabulous Blessings (https://pypi.org/project/blessings/).
 
 This has the upshot of providing a simple cross-platform API for printing
 colored terminal text from Python, and has the happy side-effect that existing
@@ -67,8 +71,7 @@ Copyright Jonathan Hartley 2013. BSD 3-Clause license; see LICENSE file.
 Dependencies
 ============
 
-None, other than Python. Tested on Python 2.5.5, 2.6.5, 2.7, 3.1.2, 3.2, 3.3,
-3.4 and 3.5.
+None, other than Python. Tested on Python 2.7, 3.4, 3.5 and 3.6.
 
 Usage
 =====
@@ -298,9 +301,7 @@ Help and fixes welcome!
 Running tests requires:
 
 - Michael Foord's ``mock`` module to be installed.
-- Tests are written using 2010-era updates to ``unittest``, and require
-  Python 2.7 or greater, OR to have Michael Foord's ``unittest2`` module
-  installed.
+- Tests are written using 2010-era updates to ``unittest``
 
 To run tests::
 
@@ -343,4 +344,3 @@ Thanks
   to include Python 3.3 and 3.4
 * Andy Neff for fixing RESET of LIGHT_EX colors.
 * Jonathan Hartley for the initial idea and implementation.
-
