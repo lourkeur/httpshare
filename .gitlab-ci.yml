@@ -1,8 +1,21 @@
 image: python:latest
 
+stages:
+  - make
+  - test
+
 zipapp:
+  stage: make
   script:
     - ./make_zipapp.py
   artifacts:
     paths:
       - httpshare.pyz
+
+testsuite:
+  stage: test
+  before_script:
+    - apt-get -y update
+    - apt-get -y install bats
+  script:
+    - MODE=release ./test.bats
