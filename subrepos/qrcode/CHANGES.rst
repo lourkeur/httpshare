@@ -2,6 +2,14 @@
 Change log
 ==========
 
+6.1 (14 January 2019)
+=====================
+
+- Fix short chunks of data not being optimized to the correct mode.
+
+- Tests fixed for Python 3
+
+
 6.0 (23 March 2018)
 ===================
 
