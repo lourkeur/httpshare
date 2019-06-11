@@ -218,6 +218,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 END
 }
 
+specialchars_filename='\%#?$ *+@&|'
+specialchars_filename_urlescaped=%5C%25%23%3F%24%20%2A%2B%40%26%7C
+specialchars_filename_html='\%#?$ *+@&amp;|'
 expected_specialchars_index () {
 cat <<END
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
@@ -228,7 +231,7 @@ cat <<END
     <body>
         <h1>.specialchars/</h1>
 <ul>
-    <li><a href='\%#?$ *+@&amp;|'>\%#?$ *+@&amp;|</a></li>
+    <li><a href='${specialchars_filename_urlescaped}'>${specialchars_filename_html}</a></li>
 </ul>
 <hr/>
 <form enctype='multipart/form-data', method='post'>
@@ -292,7 +295,7 @@ mkdir share/b
 echo "content of b/c" >share/b/c
 
 mkdir share/.specialchars
-echo "content of illegibly-named file" >"share/.specialchars/"'\%#?$ *+@&|'
+echo "content of illegibly-named file" >"share/.specialchars/${specialchars_filename}"
 server_dir="$tempdir/share"
 server_log="$tempdir/server.log"
 
@@ -389,6 +392,5 @@ cmp -s <(curl -s -L "$server_url/copy") "$tempdir/server.pyz"
 }
 
 @test "download of the illegibly-named file" {
-    filename='\%#?$ *+@&amp;|'  # should be coming from the listing
-    [ "$(curl -s "$server_url/share/.specialchars/$filename")" = "content of illegibly-named file" ]
+    [ "$(curl -s "$server_url/share/.specialchars/${specialchars_filename_urlescaped}")" = "content of illegibly-named file" ]
 }
