@@ -1,5 +1,5 @@
 <ul>
-  %from urllib.parse import quote
+  %from httpshare.compat.urllib.parse import quote
   %for ent in entries:
     <li><a href='{{quote(ent)}}'>{{ent}}</a></li>
   %end
