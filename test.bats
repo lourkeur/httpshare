@@ -218,6 +218,29 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 END
 }
 
+expected_specialchars_index () {
+cat <<END
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html>
+    <head>
+        <title>httpshare &mdash; .specialchars/</title>
+    </head>
+    <body>
+        <h1>.specialchars/</h1>
+<ul>
+    <li><a href='\%#?$ *+@&amp;|'>\%#?$ *+@&amp;|</a></li>
+</ul>
+<hr/>
+<form enctype='multipart/form-data', method='post'>
+  <input type='file', name='payload' />
+  <input type='submit', value='OK' />
+</form>
+
+    </body>
+</html>
+END
+}
+
 if [ -z "$PYTHON" ]; then
   PYTHON=python
 fi
@@ -267,6 +290,9 @@ mkdir share
 echo "content of a" >share/a
 mkdir share/b
 echo "content of b/c" >share/b/c
+
+mkdir share/.specialchars
+echo "content of illegibly-named file" >"share/.specialchars/"'\%#?$ *+@&|'
 server_dir="$tempdir/share"
 server_log="$tempdir/server.log"
 
@@ -356,4 +382,13 @@ diff -u <(expected_license_page) <(curl -s -L "$server_url/license")
 @test "copy" {
 [ "$MODE" = debug ] && skip
 cmp -s <(curl -s -L "$server_url/copy") "$tempdir/server.pyz"
+}
+
+@test "correct listing of special character in file names" {
+    diff -u <(expected_specialchars_index) <(curl -s "$server_url/share/.specialchars/")
+}
+
+@test "download of the illegibly-named file" {
+    filename='\%#?$ *+@&amp;|'  # should be coming from the listing
+    [ "$(curl -s "$server_url/share/.specialchars/$filename")" = "content of illegibly-named file" ]
 }
