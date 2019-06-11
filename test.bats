@@ -218,9 +218,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 END
 }
 
-specialchars_filename='\%#?$ *+@&|'
-specialchars_filename_urlescaped=%5C%25%23%3F%24%20%2A%2B%40%26%7C
-specialchars_filename_html='\%#?$ *+@&amp;|'
+specialchars_filename='%#?$ *+@&|'
+specialchars_filename_urlescaped=%25%23%3F%24%20%2A%2B%40%26%7C
+specialchars_filename_html='%#?$ *+@&amp;|'
 expected_specialchars_index () {
 cat <<END
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
