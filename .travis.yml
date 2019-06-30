@@ -4,8 +4,13 @@ python: "3.7"
 script:
   - ./make_zipapp.py
   - env MODE=release ./test.bats
+  - gpg --import release_key.asc
+  - gpg --verify httpshare.pyz{.asc,}
 deploy:
   provider: releases
+  file:
+    - httpshare.pyz
+    - httpshare.pyz.asc
   skip_cleanup: true
   api_key:
     secure: pLh92iWfT87WZM7X9eDTtUKvv25vc7p/Fn3zqSGUdQT8NsMi0H9wQ4XsA8rIYiPMlgmYqtsz/wK7+2Nz3xeaX2uZQPlQFukpuv47R7Qhces48hIEo86Jz8SNT1ZXiuU9YW+FNJPdc3KbZq8x7OUmeUUAmepi+nrv1RAj6OUTdsAzYfRwGYJOcCgNdkpt9YzKSkwTArA6+gbQp9ahvPi2E143BqMcBJB17lT6tUOOJ7zeg5AJgnHtcNxIAwV62mBX011sM63MIEyAgUTDR/tEXT1xtPoHfb3OwcAevFMbCA2k/Rvi7ppUIgV+AXoSs6PPxE9kbRI8cuukxcg8vjQp9zVamykHkKSWLO23+mgRiOcnrIrGh2Cr64RuYKeWUvnWiIK+V02YZU8bBTet3LeszSHAEVyXc3Ng8i1LIBXiwgeDObtJUxNAtrF0srFQWn83SGRPFoQwwiIDzWughTDge99gR9YJNkJa5Pvdol36MVl3eZR7TA0Wwq6ZHG32qczEb4jAwk5x4hi1FSX+3DK48+1oj6mYoARcFR+zlQGsQuSTJA6CaTraQnG5lCZ9Q5doh1M/kHCpl+DQLruu1VE6KxriPyXch3mUDRXn2ifKhJYwfUOELYRLJQE1tnXVvA9eRmA1DQPySsLY5b7pS5tLL8B+T5IOxwQ3xz0uj/nr6FI=
