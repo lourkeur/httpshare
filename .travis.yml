@@ -1,5 +1,6 @@
 language: python
-python: "3.6"
+dist: xenial
+python: "3.7"
 script:
   - ./make_zipapp.py
   - base64 httpshare.pyz
