@@ -2,6 +2,12 @@
 
 # Simple regression tests.
 
+if [ -z "$PYTHON" ]; then
+    PYTHON=python
+fi
+
+export PYTHONPATH="$PWD/src"
+
 expected_homepage () {
 cat <<END
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
@@ -218,9 +224,35 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 END
 }
 
-if [ -z "$PYTHON" ]; then
-  PYTHON=python
-fi
+specialchars_filename='~.,%#?$ *+@&|:;@[]=!"'"'"
+specialchars_filename_html='~.,%#?$ *+@&amp;|:;@[]=!&quot;&#039;'
+specialchars_filename_urlescaped=$(python <<END
+from httpshare.compat.urllib.parse import quote
+print(quote("""${specialchars_filename}"""))
+END
+)
+expected_specialchars_index () {
+cat <<END
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html>
+    <head>
+        <title>httpshare &mdash; .specialchars/</title>
+    </head>
+    <body>
+        <h1>.specialchars/</h1>
+<ul>
+    <li><a href='${specialchars_filename_urlescaped}'>${specialchars_filename_html}</a></li>
+</ul>
+<hr/>
+<form enctype='multipart/form-data', method='post'>
+  <input type='file', name='payload' />
+  <input type='submit', value='OK' />
+</form>
+
+    </body>
+</html>
+END
+}
 
 case "$MODE" in
 ( debug | release )
@@ -255,7 +287,6 @@ if [ "$MODE" = release ]; then
   cp httpshare.pyz "$tempdir/server.pyz"
   program_options=(server.pyz)
 else
-  export PYTHONPATH="$PWD/src"
   program_options=(-c 'import httpshare; httpshare.main()')
 fi
 
@@ -267,6 +298,9 @@ mkdir share
 echo "content of a" >share/a
 mkdir share/b
 echo "content of b/c" >share/b/c
+
+mkdir share/.specialchars
+echo "content of illegibly-named file" >"share/.specialchars/${specialchars_filename}"
 server_dir="$tempdir/share"
 server_log="$tempdir/server.log"
 
@@ -356,4 +390,12 @@ diff -u <(expected_license_page) <(curl -s -L "$server_url/license")
 @test "copy" {
 [ "$MODE" = debug ] && skip
 cmp -s <(curl -s -L "$server_url/copy") "$tempdir/server.pyz"
+}
+
+@test "correct listing of special character in file names" {
+    diff -u <(expected_specialchars_index) <(curl -s "$server_url/share/.specialchars/")
+}
+
+@test "download of the illegibly-named file" {
+    [ "$(curl -s "$server_url/share/.specialchars/${specialchars_filename_urlescaped}")" = "content of illegibly-named file" ]
 }

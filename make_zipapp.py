@@ -19,6 +19,8 @@ with tempfile.TemporaryFile() as temp1, \
     with zipfile.ZipFile(temp1, 'r') as z1, \
          zipfile.ZipFile(temp2, 'w') as z2:
         for ent in sorted(z1.namelist()):
+            if ent.endswith(".pyc") or ent.endswith("__pycache__/"):
+                continue  # drop from the archive
             z2.writestr(zipfile.ZipInfo(ent, TIMESTAMP), z1.read(ent), COMPRESSION)
     temp2.seek(0)
     zipapp.create_archive(temp2, interpreter=INTERPRETER, target='httpshare.pyz')
