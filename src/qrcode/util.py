@@ -341,11 +341,17 @@ def optimal_data_chunks(data, minimum=4):
     :param minimum: The minimum number of bytes in a row to split as a chunk.
     """
     data = to_bytestring(data)
-    re_repeat = b'{' + u'{}'.format(minimum).encode('ascii') + b',}'
-    num_pattern = re.compile(b'\d' + re_repeat)
+    num_pattern = b'\d'
+    alpha_pattern = b'[' + re.escape(ALPHA_NUM) + b']'
+    if len(data) <= minimum:
+        num_pattern = re.compile(b'^' + num_pattern + b'+$')
+        alpha_pattern = re.compile(b'^' + alpha_pattern + b'+$')
+    else:
+        re_repeat = (
+            b'{' + u'{}'.format(minimum).encode('ascii') + b',}')
+        num_pattern = re.compile(num_pattern + re_repeat)
+        alpha_pattern = re.compile(alpha_pattern + re_repeat)
     num_bits = _optimal_split(data, num_pattern)
-    alpha_pattern = re.compile(
-        b'[' + re.escape(ALPHA_NUM) + b']' + re_repeat)
     for is_num, chunk in num_bits:
         if is_num:
             yield QRData(chunk, mode=MODE_NUMBER, check_data=False)
