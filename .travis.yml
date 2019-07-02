@@ -6,6 +6,11 @@ script:
   - env MODE=release ./test.bats
   - gpg --import release_key.asc
   - gpg --verify httpshare.pyz{.asc,}
+before_deploy:
+  - git config --local user.name "Louis Bettens"
+  - git config --local user.email "lourkeur@users.noreply.github.com"
+  - export TRAVIS_TAG=$(cd src; python -c "import httpshare; print(httpshare.version)")
+  - git tag $TRAVIS_TAG
 deploy:
   provider: releases
   file:
