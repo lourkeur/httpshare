@@ -1,15 +1,13 @@
-{ stdenv, bats, python3 }:
+{ stdenv, bats, python3, ensureNewerSourcesForZipFilesHook }:
 stdenv.mkDerivation {
   name = "httpshare";
   src = ./.;
 
-  buildInputs = [bats python3];
+  buildInputs = [bats python3 ensureNewerSourcesForZipFilesHook];
 
   dontPatchShebangs = true;  # Keep the portable shebang.
 
   buildPhase = ''
-    # set epoch to 1980 because zip doesn't support the seventies
-    find -exec touch -t 198001010000.00 {} +
     ./make_zipapp.py
   '';
 
