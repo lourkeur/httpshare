@@ -1,10 +1,11 @@
-{ stdenv, bats, python3, ensureNewerSourcesForZipFilesHook, python }:
+{ pkgs }:
+let
+  pyz = pkgs.callPackage ({ stdenv, bats, python3, ensureNewerSourcesForZipFilesHook }:
 stdenv.mkDerivation {
-  name = "httpshare";
+  name = "httpshare.pyz";
   src = ./.;
 
   buildInputs = [bats python3 ensureNewerSourcesForZipFilesHook];
-  propagatedBuildInputs = [python]; # need python (any version) for the shebang.
 
   dontPatchShebangs = true;  # Keep the portable shebang.
 
@@ -13,7 +14,20 @@ stdenv.mkDerivation {
   '';
 
   installPhase = ''
-    mkdir -p $out/bin
-    cp httpshare.pyz $out/bin/httpshare
+    cp httpshare.pyz $out
   '';
-}
+}) {};
+in
+pkgs.callPackage ({ stdenv, python, makeWrapper }:
+stdenv.mkDerivation {
+  name = "httpshare";
+  inherit pyz;
+
+  buildInputs = [python makeWrapper];
+
+  phases = "installPhase";
+  installPhase = ''
+    mkdir -p $out/bin
+    makeWrapper ${python}/bin/python $out/bin/httpshare --add-flags $pyz
+  '';
+}) {}
