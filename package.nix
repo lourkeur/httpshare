@@ -23,6 +23,17 @@ pkgs.callPackage ({ stdenv, python, makeWrapper }:
     name = "httpshare";
     inherit pyz;
 
+    meta = with stdenv.lib; {
+      description = "A file transfer utility using an ephemeral HTTP service";
+      license = licenses.zlib;
+      homepage = https://github.com/lourkeur/httpshare;
+      maintainers = [{
+        name = "Louis Bettens";
+        email = "louis@bettens.info";
+        github = "lourkeur";
+      }];
+    };
+
     buildInputs = [python makeWrapper];
 
     phases = "installPhase";
