@@ -253,6 +253,31 @@ cat <<END
 </html>
 END
 }
+unicode_filename=$'\u0152'ufs
+unicode_filename_html="${unicode_filename}"
+unicode_filename_urlescaped="%C5%92ufs"
+expected_unicode_index () {
+cat <<END
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html>
+    <head>
+        <title>httpshare &mdash; .unicode/</title>
+    </head>
+    <body>
+        <h1>.unicode/</h1>
+<ul>
+    <li><a href='${unicode_filename_urlescaped}'>${unicode_filename_html}</a></li>
+</ul>
+<hr/>
+<form enctype='multipart/form-data', method='post'>
+  <input type='file', name='payload' />
+  <input type='submit', value='OK' />
+</form>
+
+    </body>
+</html>
+END
+}
 
 case "$MODE" in
 ( debug | release )
@@ -301,6 +326,9 @@ echo "content of b/c" >share/b/c
 
 mkdir share/.specialchars
 echo "content of illegibly-named file" >"share/.specialchars/${specialchars_filename}"
+mkdir share/.unicode
+echo "means eggs in French" >"share/.unicode/${unicode_filename}"
+
 server_dir="$tempdir/share"
 server_log="$tempdir/server.log"
 
@@ -398,4 +426,13 @@ cmp -s <(curl -s -L "$server_url/copy") "$tempdir/server.pyz"
 
 @test "download of the illegibly-named file" {
     [ "$(curl -s "$server_url/share/.specialchars/${specialchars_filename_urlescaped}")" = "content of illegibly-named file" ]
+}
+
+@test "correct listing of Unicode characters in file names" {
+    diff -u <(expected_unicode_index) <(curl -s "$server_url/share/.unicode/")
+}
+
+@test "download of the French-named file" {
+  curl -s "$server_url/share/.unicode/${unicode_filename_urlescaped}"
+    [ "$(curl -s "$server_url/share/.unicode/${unicode_filename}")" = "means eggs in French" ]
 }
