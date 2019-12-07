@@ -18,7 +18,7 @@ let
       checkPhase = ''
 	# test.bats call make_zipapp.py, which we don't want.
         echo "#!/bin/sh" >make_zipapp.py
-        env MODE=release LANG=C.utf8 bats test.bats
+        env MODE=release bats test.bats
       '';
 
       installPhase = ''

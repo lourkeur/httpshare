@@ -253,7 +253,7 @@ cat <<END
 </html>
 END
 }
-unicode_filename=$'\u0152'ufs
+unicode_filename=$'\xC5\x92'ufs
 unicode_filename_html="${unicode_filename}"
 unicode_filename_urlescaped="%C5%92ufs"
 expected_unicode_index () {
