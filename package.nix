@@ -1,16 +1,24 @@
 { pkgs }:
 let
-  pyz = pkgs.callPackage ({ stdenv, bats, python3, ensureNewerSourcesForZipFilesHook }:
+  pyz = pkgs.callPackage ({ bats, curl, git, stdenv, python3, ensureNewerSourcesForZipFilesHook }:
     stdenv.mkDerivation {
       name = "httpshare.pyz";
       src = ./.;
 
-      buildInputs = [bats python3 ensureNewerSourcesForZipFilesHook];
+      buildInputs = [python3 ensureNewerSourcesForZipFilesHook];
 
       dontPatchShebangs = true;  # Keep the portable shebang.
 
       buildPhase = ''
         ${python3}/bin/python make_zipapp.py
+      '';
+
+      checkInputs = [bats curl git];
+
+      checkPhase = ''
+	# test.bats call make_zipapp.py, which we don't want.
+        echo "#!/bin/sh" >make_zipapp.py
+        env MODE=release LANG=C.utf8 bats test.bats
       '';
 
       installPhase = ''
