@@ -433,6 +433,5 @@ cmp -s <(curl -s -L "$server_url/copy") "$tempdir/server.pyz"
 }
 
 @test "download of the French-named file" {
-  curl -s "$server_url/share/.unicode/${unicode_filename_urlescaped}"
-    [ "$(curl -s "$server_url/share/.unicode/${unicode_filename}")" = "means eggs in French" ]
+    [ "$(curl -s "$server_url/share/.unicode/${unicode_filename_urlescaped}")" = "means eggs in French" ]
 }
