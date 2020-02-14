@@ -14,9 +14,10 @@ let
       '';
 
       checkInputs = [bats curl git];
+      doCheck = true;
 
       checkPhase = ''
-	# test.bats call make_zipapp.py, which we don't want.
+        # test.bats call make_zipapp.py, which we don't want.
         echo "#!/bin/sh" >make_zipapp.py
         env MODE=release bats test.bats
       '';
