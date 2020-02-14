@@ -1,8 +1,12 @@
 { pkgs }:
 let
+  version = with builtins; with fromJSON (readFile src/httpshare/version.json);
+    "${toString major}.${toString minor}.${toString patch}"
+      + (if suffix != "" then "-${suffix}" else "");
   pyz = pkgs.callPackage ({ bats, curl, git, stdenv, python3, ensureNewerSourcesForZipFilesHook }:
     stdenv.mkDerivation {
-      name = "httpshare.pyz";
+      pname = "httpshare.pyz";
+      inherit version;
       src = ./.;
 
       buildInputs = [python3 ensureNewerSourcesForZipFilesHook];
@@ -29,8 +33,8 @@ let
 in
 pkgs.callPackage ({ stdenv, python, makeWrapper }:
   stdenv.mkDerivation {
-    name = "httpshare";
-    inherit pyz;
+    pname = "httpshare";
+    inherit version;
 
     meta = with stdenv.lib; {
       description = "A file transfer utility using an ephemeral HTTP service";
@@ -46,6 +50,7 @@ pkgs.callPackage ({ stdenv, python, makeWrapper }:
     buildInputs = [python makeWrapper];
 
     phases = "installPhase";
+    inherit pyz;
     installPhase = ''
       mkdir -p $out/bin
       makeWrapper ${python}/bin/python $out/bin/httpshare --add-flags $pyz

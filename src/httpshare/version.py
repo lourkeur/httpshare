@@ -1,13 +1,12 @@
 # Copyright 2020 Louis Bettens
 
 
+import json, pkgutil
+
 from collections import namedtuple
 
 version_info = namedtuple('version', 'major minor patch suffix')(
-    major=1,
-    minor=0,
-    patch=7,
-    suffix='dev',
+    **json.loads(pkgutil.get_data('httpshare', 'version.json'))
 )
 
 version = '%(major)d.%(minor)d.%(patch)d' % version_info._asdict()
