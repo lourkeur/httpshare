@@ -14,6 +14,8 @@ Download and docs:
     https://pypi.org/project/colorama/
 Source code & Development:
     https://github.com/tartley/colorama
+Colorama for Enterprise:
+    https://github.com/tartley/colorama/blob/master/ENTERPRISE.md
 
 Description
 ===========
@@ -65,13 +67,13 @@ text'; it looks the same as 'normal text'.
 License
 =======
 
-Copyright Jonathan Hartley 2013. BSD 3-Clause license; see LICENSE file.
+Copyright Jonathan Hartley & Arnon Yaari, 2013. BSD 3-Clause license; see LICENSE file.
 
 
 Dependencies
 ============
 
-None, other than Python. Tested on Python 2.7, 3.4, 3.5 and 3.6.
+None, other than Python. Tested on Python 2.7, 3.5, 3.6, 3.7 and 3.8.
 
 Usage
 =====
@@ -121,7 +123,7 @@ constant shorthand for ANSI escape sequences:
 .. code-block:: python
 
     print('\033[31m' + 'some red text')
-    print('\033[30m') # and reset to default color
+    print('\033[39m') # and reset to default color
 
 ...or, Colorama can be used happily in conjunction with existing ANSI libraries
 such as Termcolor:
@@ -204,6 +206,17 @@ init(wrap=True):
 
         # Python 3
         print(Fore.BLUE + 'blue text on stderr', file=stream)
+
+
+Installation
+=======================
+colorama is currently installable from PyPI:
+
+    pip install colorama
+    
+colorama also can be installed by the conda package manager:
+
+    conda install -c anaconda colorama 
 
 
 Status & Known Problems
@@ -312,6 +325,27 @@ This, like a few other handy commands, is captured in a ``Makefile``.
 If you use nose to run the tests, you must pass the ``-s`` flag; otherwise,
 ``nosetests`` applies its own proxy to ``stdout``, which confuses the unit
 tests.
+
+
+Professional support
+====================
+
+.. |tideliftlogo| image:: https://cdn2.hubspot.net/hubfs/4008838/website/logos/logos_for_download/Tidelift_primary-shorthand-logo.png
+   :alt: Tidelift
+   :target: https://tidelift.com/subscription/pkg/pypi-colorama?utm_source=pypi-colorama&utm_medium=referral&utm_campaign=readme
+
+.. list-table::
+   :widths: 10 100
+
+   * - |tideliftlogo|
+     - Professional support for colorama is available as part of the
+       `Tidelift Subscription`_.
+       Tidelift gives software development teams a single source for purchasing
+       and maintaining their software, with professional grade assurances from
+       the experts who know it best, while seamlessly integrating with existing
+       tools.
+
+.. _Tidelift Subscription: https://tidelift.com/subscription/pkg/pypi-colorama?utm_source=pypi-colorama&utm_medium=referral&utm_campaign=readme
 
 
 Thanks

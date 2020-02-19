@@ -5,7 +5,8 @@
 ;
 [subrepo]
 	remote = https://github.com/tartley/colorama
-	branch = 0.4.1
-	commit = d69f83f53c0c5aa1081d1f5eebb2dc2df6028f37
-	parent = 4d918edefe2b3f95547a629d80fbd9a838536acb
-	cmdver = 0.3.1
+	branch = 0.4.3
+	commit = 38e444ab5ec529509df8a7db0243bfe205939008
+	parent = 5cf48e205ff86fc3d79f0caf75ff30bc5bd92269
+	cmdver = 0.4.1
+	method = merge
