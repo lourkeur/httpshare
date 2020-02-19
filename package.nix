@@ -1,14 +1,13 @@
 { pkgs }:
 let
+  src = ./.;
   version = with builtins; with fromJSON (readFile src/httpshare/version.json);
     "${toString major}.${toString minor}.${toString patch}"
       + (if suffix != "" then "-${suffix}" else "");
   pyz = pkgs.callPackage ({ stdenv, python3, ensureNewerSourcesForZipFilesHook }:
     stdenv.mkDerivation {
       pname = "httpshare.pyz";
-      inherit version;
-
-      src = ./.;
+      inherit version src;
 
       buildInputs = [python3 ensureNewerSourcesForZipFilesHook];
 
@@ -26,7 +25,7 @@ in
 pkgs.callPackage ({ stdenv, python, makeWrapper, bats, curl }:
   stdenv.mkDerivation {
     pname = "httpshare";
-    inherit version;
+    inherit version src;
 
     meta = with stdenv.lib; {
       description = "A file transfer utility using an ephemeral HTTP service";
@@ -40,7 +39,6 @@ pkgs.callPackage ({ stdenv, python, makeWrapper, bats, curl }:
     };
 
     inherit pyz;
-    src = ./.;
 
     buildInputs = [python makeWrapper];
 
