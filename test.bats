@@ -76,7 +76,7 @@ cat <<END
         <pre>
 zlib License
 
-Copyright 2019 Louis Bettens
+Copyright 2020 Louis Bettens
 
 This software is provided &#039;as-is&#039;, without any express or implied warranty.
 In no event will the authors be held liable for any damages arising from the
@@ -253,6 +253,31 @@ cat <<END
 </html>
 END
 }
+unicode_filename=$'\xC5\x92'ufs
+unicode_filename_html="${unicode_filename}"
+unicode_filename_urlescaped="%C5%92ufs"
+expected_unicode_index () {
+cat <<END
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html>
+    <head>
+        <title>httpshare &mdash; .unicode/</title>
+    </head>
+    <body>
+        <h1>.unicode/</h1>
+<ul>
+    <li><a href='${unicode_filename_urlescaped}'>${unicode_filename_html}</a></li>
+</ul>
+<hr/>
+<form enctype='multipart/form-data', method='post'>
+  <input type='file', name='payload' />
+  <input type='submit', value='OK' />
+</form>
+
+    </body>
+</html>
+END
+}
 
 case "$MODE" in
 ( debug | release )
@@ -283,14 +308,13 @@ done
 setup () {
 tempdir=$(mktemp -d -p "$BATS_TMPDIR" httpshare.XXXXXX)
 if [ "$MODE" = release ]; then
-  ./make_zipapp.py
   cp httpshare.pyz "$tempdir/server.pyz"
   program_options=(server.pyz)
 else
   program_options=(-c 'import httpshare; httpshare.main()')
 fi
 
-repodir=$(git rev-parse --show-toplevel)
+repodir=$(pwd)
 [ -n "$repodir" ]
 
 cd "$tempdir"
@@ -301,6 +325,9 @@ echo "content of b/c" >share/b/c
 
 mkdir share/.specialchars
 echo "content of illegibly-named file" >"share/.specialchars/${specialchars_filename}"
+mkdir share/.unicode
+echo "means eggs in French" >"share/.unicode/${unicode_filename}"
+
 server_dir="$tempdir/share"
 server_log="$tempdir/server.log"
 
@@ -398,4 +425,12 @@ cmp -s <(curl -s -L "$server_url/copy") "$tempdir/server.pyz"
 
 @test "download of the illegibly-named file" {
     [ "$(curl -s "$server_url/share/.specialchars/${specialchars_filename_urlescaped}")" = "content of illegibly-named file" ]
+}
+
+@test "correct listing of Unicode characters in file names" {
+    diff -u <(expected_unicode_index) <(curl -s "$server_url/share/.unicode/")
+}
+
+@test "download of the French-named file" {
+    [ "$(curl -s "$server_url/share/.unicode/${unicode_filename_urlescaped}")" = "means eggs in French" ]
 }
