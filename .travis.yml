@@ -4,8 +4,8 @@ python: "3.7"
 script:
   - ./make_zipapp.py
   - env MODE=release ./test.bats
-  - gpg --import release_key.asc
-  - gpg --verify httpshare.pyz{.asc,}
+  - gpg2 --import release_key.asc
+  - gpg2 --verify httpshare.pyz{.asc,}
 before_deploy:
   - git config --local user.name "Louis Bettens"
   - git config --local user.email "lourkeur@users.noreply.github.com"
