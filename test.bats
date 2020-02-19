@@ -308,14 +308,13 @@ done
 setup () {
 tempdir=$(mktemp -d -p "$BATS_TMPDIR" httpshare.XXXXXX)
 if [ "$MODE" = release ]; then
-  ./make_zipapp.py
   cp httpshare.pyz "$tempdir/server.pyz"
   program_options=(server.pyz)
 else
   program_options=(-c 'import httpshare; httpshare.main()')
 fi
 
-repodir=$(git rev-parse --show-toplevel)
+repodir=$(pwd)
 [ -n "$repodir" ]
 
 cd "$tempdir"
